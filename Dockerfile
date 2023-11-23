@@ -1,4 +1,4 @@
-FROM --platform=$BUILDPLATFORM golang:1.21.3 AS build
+FROM --platform=$BUILDPLATFORM golang:1.21.4 AS build
 
 ARG TARGETOS
 ARG TARGETARCH
@@ -23,7 +23,7 @@ RUN --mount=type=cache,target=/go/pkg/mod \
     --ldflags '-linkmode external -extldflags "-static"' \
     -o /bin/server main.go
 
-FROM gcr.io/distroless/base
+FROM cgr.dev/chainguard/static
 
 COPY --from=build /bin/server /bin/
 
